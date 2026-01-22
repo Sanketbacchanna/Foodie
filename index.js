@@ -3,12 +3,21 @@ const path = require('path');
 const mysql2 = require('mysql2');
 const app = express();
 
-const database = mysql2.createConnection({
-    host: "127.0.0.1",
-    user: "root",
-    password: "Sanket@123",
-    database: "foodie"  
+//i am changing this also
+// const database = mysql2.createConnection({
+//     host: "127.0.0.1",
+//     user: "root",
+//     password: "Sanket@123",
+//     database: "foodie"  
+// });
+
+const db = mysql.createConnection({
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME
 });
+
 
 database.connect((error) => {
     if (error) {
@@ -203,8 +212,14 @@ app.post('/submit', (req, res) => {
         res.send("Registration unsuccessful");
     }
 });
+// iam changing this for host
+// app.listen(2000, () => {
+//     console.log('Server is running on port 2000');
+// });
 
-app.listen(2000, () => {
-    console.log('Server is running on port 2000');
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+  console.log("Server running on port " + PORT);
 });
 
